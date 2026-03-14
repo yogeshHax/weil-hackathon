@@ -1,86 +1,182 @@
-## Project submissions for Xpecto Weilliptic Hackathon 2026, IIT Mandi
+<<<<<<< HEAD
 
+<h1 align="center">Aethris <br/> <span style="font-size: 0.6em; font-weight: 500;">Advanced Agentic AI Campaign Platform</span></h1>
 
-This repository is used to collect all team submissions for the hackathon. Each team must submit their project artifacts (code, applets, PDFs, documentation, etc.) via a Pull Request.
+<p align="center">
+  <strong>Plan, execute, monitor, and autonomously optimize digital marketing campaigns using Gemini 2.5 Flash and LangGraph. Built for BFSI marketing teams who demand precision, automation, and human-in-the-loop control.</strong>
+</p>
 
-Submission Guidelines
+<p align="center">
+  <a href="#features">Features</a> •
+  <a href="#architecture">Architecture</a> •
+  <a href="#tech-stack">Tech Stack</a> •
+  <a href="#installation">Installation</a> •
+  <a href="#usage">Usage</a>
+</p>
 
-Fork this repository to your GitHub account.
+---
 
-Create a folder with your team name inside the repository root.
+## ⚡ Overview
 
-Example:
+Aetheris (formerly CampaignX Sentinel) is a comprehensive, production-ready AI platform designed to eliminate the manual overhead of digital marketing. By simply typing a natural language campaign brief, Aetheris's specialized AI agents take over: parsing your intent, pulling your live customer cohort, running intelligent demographic segmentations, drafting personalized email copy, and dispatching multi-wave A/B tests through autonomous API discovery.
 
+Once a campaign is live, Aetheris doesn't stop. Its **Analytics Edge Agent** continuously ingests open-rate and click-rate telemetry to dynamically retarget underperforming segments and autonomously optimize the campaign's "Wave 2"—always keeping a human safely in the loop for final approvals.
+
+---
+
+## ✨ Core Capabilities
+
+### 🧠 Agentic AI Planning
+- **Context-Aware Parsing:** Give Aetheris a brief (e.g., "Launch our new Term Deposit for Seniors") and the Gemini-powered Planner Agent instantly extracts target demographics, constraints, and CTA goals.
+- **Intelligent Segmentation:** Automatically slices large customer cohorts into optimized micro-segments for deep-tier A/B testing.
+
+### ⚙️ Autonomous Execution
+- **LangGraph Tool Discovery:** The Execution Agent dynamically lists, parses, and adapts to available external API tools.
+- **Scheduled Dispatch:** Automatically calibrates the absolute best send times (in IST) based on previous cohort interactions.
+
+### 📊 Live Telemetry & Optimization Workflow
+- **Continuous Feedback Loop:** Analyzes Open Rates (30% weight) and Click Rates (70% weight) from previous campaign waves.
+- **Wave 2 Auto-Correction:** Autonomously hallucinates new subject strategies, content tones, and adjusted send times for struggling demographic sectors before passing them back to the human operator for 1-click execution.
+
+### 🛡️ Enterprise-Grade Security
+- **Human-in-the-Loop:** All agent plans require firm `Approve / Reject` gating before any live API executions occur.
+- **Firebase Auth Integration:** Secure backend gateway locking platform access to verified marketing personnel.
+
+---
+
+## 🏗️ Architecture
+
+Aetheris utilizes an advanced multi-agent orchestrator written in Python and LangChain, bridged to a blazingly fast React frontend.
+
+1. **Planner Agent (`agents/planner.py`):** Ingests Brief -> Emits JSON Schema Plan.
+2. **Execution Agent (`main.py`):** Uses LangGraph `create_react_agent` to discover capabilities and interact with campaign endpoints.
+3. **Analyzer Agent (`agents/analyzer.py`):** Ingests Telemetry -> Re-segments -> Emits Wave 2 JSON.
+
+```mermaid
+graph TD;
+    A[Human Marketer] -->|Writes Brief| B(Planner Agent)
+    B -->|Segments & Drafts| C{Human Approval}
+    C -->|Approved| D(Execution Agent)
+    D -->|Dynamically Calls| E((Aetheris API))
+    E -->|Generates Telemetry| F(Analyzer Agent)
+    F -->|Optimizes V2| C
 ```
-/TeamEuler
-/TeamGauss
-/TeamLagrange
+
+---
+
+## 💻 Tech Stack
+
+### Frontend (User Interface)
+- **Framework:** React + Vite
+- **Styling:** Custom "Deep Space" CSS Architecture (Glassmorphism, CSS Variables, Responsive)
+- **State Management:** React Hooks
+- **Authentication:** Google Firebase Auth
+
+### Backend (Agentic Engine)
+- **Framework:** FastAPI (Python)
+- **AI/LLM Core:** Google Gemini 1.5 Flash (`langchain-google-genai`)
+- **Agent Orchestration:** LangChain & LangGraph
+- **HTTP Client:** `httpx` for seamless external API interactions
+
+---
+
+## 🚀 Installation & Setup
+
+### Prerequisites
+- Python 3.10+
+- Node.js 18+
+- Active Gemini API Key
+- Firebase Project setup
+
+### 1. Setting up the Backend
+```bash
+# Navigate to the backend directory
+cd backend
+
+# Create a virtual environment
+python -m venv venv
+venv\Scripts\activate  # Windows
+source venv/bin/activate # Mac/Linux
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Create your environmental variables 
+# backend/.env
+GEMINI_API_KEY=your_gemini_key_here
+CAMPAIGN_API_BASE=https://campaignx.inxiteout.ai
+CAMPAIGN_API_KEY=your_campaign_key
+
+# Run the FastAPI server
+python -m uvicorn main:app --reload --port 8000
 ```
-Add all your project artifacts inside this folder, such as:
 
-```
-Source code
-Applets
-PDFs
-Presentation slides
-Documentation
-Demo instructions
-```
+### 2. Setting up the Frontend
+```bash
+# Navigate to the frontend directory
+cd frontend
 
+# Install dependencies
+npm install
 
-Example structure:
+# Setup your Firebase config inside src/firebase.js
 
-```
-TeamEuler/
-├── README.md
-├── presentation.pdf
-├── demo.mp4
-└── dapp/
+# Start the Vite development server
+npm run dev
 ```
 
-Commit your changes and push them to your fork.
+---
 
-Create a Pull Request to this repository.
+## 📖 Usage Workflow
 
-Pull Request Format
+1. **Sign In:** Use your Google Auth credentials on the Aetheris splash page.
+2. **Draft a Brief:** Inside the Campaign Studio, explain what you want to sell. Use natural language. (e.g. "We need to promote our new high-yield savings account to active millennials.")
+3. **Review AI Plan:** The AI generates an extensive plan mapping out target cohorts, generated email copy, and optimized send times.
+4. **Approve:** Click Accept. The LangGraph agent executes the campaign autonomously to the backend.
+5. **Optimize:** Click the "AI Analyze & Optimize" button. The Analyzer edge agent reads the telemetry return, discovers underperforming clusters, and queues up a highly-tailored Wave 2 sequence.
+6. **Review Global Analytics:** Navigate to the `Analytics` tab on the sidebar to view aggregate funnel conversions.
 
-Your PR **title** must follow this format:
+---
 
-Submission #`<team_name>`
+<p align="center">
+  <br>
+  Developed with ❤️ for FrostHack XPECTO 2026.
+</p>
+=======
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-Your PR **description** should include:
+## Getting Started
 
-Short description of the project
-Instructions to run or test the project (if applicable)
+First, run the development server:
 
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
+```
 
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Learn More
 
+To learn more about Next.js, take a look at the following resources:
 
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
+## Deploy on Vercel
 
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+>>>>>>> bb9a614 (Uploading DataMarket files via Git LFS)
